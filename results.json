@@ -1,0 +1,39 @@
+{
+  "question": "Can a filtered class-conditional GMM generator produce synthetic data that transfers better to real held-out data (smaller real-vs-synthetic gap) than a standard class-conditional Gaussian generator?",
+  "method": "Train-on-synthetic, test-on-real logistic regression; baseline = class-conditional single Gaussian; improved = class-conditional 3-component GMM filtered by a real-vs-synthetic gradient-boosting discriminator. Seeds 42/43/44.",
+  "dataset": {
+    "name": "sklearn breast_cancer (Wisconsin diagnostic), stand-in for sperm-motion features",
+    "source_url": "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html",
+    "n_rows": 569,
+    "n_train": 398,
+    "n_test": 171,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "test accuracy on real held-out data (train on synthetic)",
+  "higher_is_better": true,
+  "baseline": "Class-conditional single multivariate Gaussian generator fitted on training split; samples as many rows as real training data.",
+  "improved": "Class-conditional 3-component Gaussian mixture generator; oversampled candidates are kept only if a gradient-boosting real-vs-synthetic discriminator (fitted on training data) scores them P(real) >= 0.5.",
+  "metrics": {
+    "baseline_score": 0.9610136452241717,
+    "baseline_score_std": 0.012016401565241693,
+    "baseline_f1": 0.9693181520959552,
+    "baseline_f1_std": 0.00921417483888712,
+    "baseline_disc_auc": 0.8270350991188172,
+    "baseline_disc_auc_std": 0.0047050539139151006,
+    "baseline_mean_ks": 0.08310999441652707,
+    "baseline_mean_ks_std": 0.0014861900228035965,
+    "improved_score": 0.9649122807017543,
+    "improved_score_std": 0.00827025475071988,
+    "improved_f1": 0.9720764622822156,
+    "improved_f1_std": 0.00677163674560972,
+    "improved_disc_auc": 0.720432497748595,
+    "improved_disc_auc_std": 0.011559637763054194,
+    "improved_mean_ks": 0.07504187604690117,
+    "improved_mean_ks_std": 0.008108829107175631,
+    "improvement": 0.0038986354775826237,
+    "disc_auc_improvement": 0.10660260137022226,
+    "mean_ks_improvement": 0.008068118369625898
+  },
+  "notes": "Breast-cancer data is a stand-in, not the paper's sperm-motion data. Single stratified split; no hyper-parameter search was run (fixed defaults), so nothing was selected on test data. Filter fallback fills with top-scored rejects when too few candidates pass. Std is over 3 seeds only; differences may be within noise. Discriminator AUC uses fresh synthetic test-size samples."
+}

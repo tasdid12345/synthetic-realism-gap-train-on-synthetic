@@ -19,6 +19,36 @@ python analysis.py
 
 Results are written to `results.json` (and a chart to `figures/`).
 
+## Results (latest run)
+
+On the public breast_cancer dataset (stand-in for sperm-motion data), a standard class-conditional Gaussian generator reached 96.1% test accuracy when training on synthetic data, while the filtered 3-component GMM reached 96.5%, a small gain within seed noise (std about 1 point).
+
+| Metric | Value |
+|---|---|
+| baseline_score | 0.961 |
+| baseline_score_std | 0.01202 |
+| baseline_f1 | 0.9693 |
+| baseline_f1_std | 0.009214 |
+| baseline_disc_auc | 0.827 |
+| baseline_disc_auc_std | 0.004705 |
+| baseline_mean_ks | 0.08311 |
+| baseline_mean_ks_std | 0.001486 |
+| improved_score | 0.9649 |
+| improved_score_std | 0.00827 |
+| improved_f1 | 0.9721 |
+| improved_f1_std | 0.006772 |
+| improved_disc_auc | 0.7204 |
+| improved_disc_auc_std | 0.01156 |
+| improved_mean_ks | 0.07504 |
+| improved_mean_ks_std | 0.008109 |
+| improvement | 0.003899 |
+| disc_auc_improvement | 0.1066 |
+| mean_ks_improvement | 0.008068 |
+
+Run on 2026-10-12. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Breast-cancer data is a stand-in, not the paper's sperm-motion data. Single stratified split; no hyper-parameter search was run (fixed defaults), so nothing was selected on test data. Filter fallback fills with top-scored rejects when too few candidates pass. Std is over 3 seeds only; differences may be within noise. Discriminator AUC uses fresh synthetic test-size samples.
+
 ## Reference
 
 This project is motivated by the following paper:
